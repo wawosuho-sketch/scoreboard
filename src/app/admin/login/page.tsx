@@ -38,41 +38,43 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-brand-bg-dark flex items-center justify-center p-4">
+    <main className="min-h-screen bg-brand-paper-cream flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-panel p-8 rounded-2xl w-full max-w-md border border-brand-border-glass relative overflow-hidden"
+        className="comic-panel p-8 w-full max-w-md bg-white border-4 border-brand-ink-black shadow-[8px_8px_0_#111111] relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-neon-blue/20 blur-3xl rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute inset-0 speed-line-bg opacity-10 pointer-events-none"></div>
         
         <div className="flex flex-col items-center mb-8 relative z-10">
-          <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 border border-white/10">
-            <Lock className="w-8 h-8 text-brand-neon-blue" />
+          <div className="w-16 h-16 bg-brand-comic-yellow flex items-center justify-center mb-4 border-2 border-brand-ink-black shadow-[4px_4px_0_#111111] rotate-3">
+            <Lock className="w-8 h-8 text-brand-ink-black" />
           </div>
-          <h1 className="text-2xl font-bold text-white">관리자 로그인</h1>
-          <p className="text-brand-text-secondary text-sm mt-2">대회 운영진 전용 페이지입니다.</p>
+          <h1 className="text-3xl font-black text-brand-ink-black score-font italic uppercase tracking-tighter">
+            ADMIN LOGIN
+          </h1>
+          <p className="text-brand-ink-black/70 font-bold text-sm mt-2">대회 운영진 전용 페이지</p>
         </div>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-3 mb-6 flex items-center gap-2 text-red-400 text-sm">
-            <ShieldAlert className="w-4 h-4 shrink-0" />
+          <div className="bg-brand-victory-red border-2 border-brand-ink-black p-3 mb-6 flex items-center gap-2 text-white font-bold text-sm shadow-[4px_4px_0_#111111] -rotate-1">
+            <ShieldAlert className="w-5 h-5 shrink-0" />
             <p>{error}</p>
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-6 relative z-10">
           <div>
-            <label className="block text-sm font-medium text-brand-text-secondary mb-2">
-              관리자 PIN 코드
+            <label className="block text-sm font-black text-brand-ink-black mb-2 uppercase tracking-widest">
+              PIN CODE
             </label>
             <input
               type="password"
               value={pin}
               onChange={(e) => setPin(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-neon-blue transition-all"
-              placeholder="PIN 번호를 입력하세요"
-              maxLength={6}
+              className="w-full bg-white border-4 border-brand-ink-black px-4 py-3 text-brand-ink-black font-black text-xl tracking-[0.5em] text-center focus:outline-none focus:ring-4 focus:ring-brand-court-orange transition-all placeholder:text-brand-ink-black/20 placeholder:tracking-normal placeholder:text-base placeholder:font-normal"
+              placeholder="핀 번호 입력"
+              maxLength={8}
               required
             />
           </div>
@@ -80,7 +82,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-brand-neon-blue text-black font-bold py-3 rounded-xl hover:bg-cyan-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full comic-stamp bg-brand-court-orange text-white text-xl py-4 hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:cursor-not-allowed hover:-rotate-1"
           >
             {loading ? "인증 중..." : "로그인"}
           </button>
