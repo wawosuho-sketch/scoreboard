@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="dark">
-      <body className={cn(outfit.className, teko.variable, "bg-brand-base-black text-white antialiased")}>
+      <body className={cn(outfit.className, teko.variable, "bg-brand-paper-cream text-brand-ink-black antialiased")}>
         {children}
         
         {/* Mobile Bottom Navigation */}

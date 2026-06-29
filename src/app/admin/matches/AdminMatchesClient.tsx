@@ -81,7 +81,7 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
   };
 
   return (
-    <main className="min-h-screen bg-brand-bg-dark text-white p-4 sm:p-8">
+    <main className="min-h-screen bg-brand-paper-cream text-brand-ink-black p-4 sm:p-8 pb-24">
       <div className="max-w-5xl mx-auto">
         <header className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -111,8 +111,8 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
             const div = divisions.find(d => d.id === match.division_id);
             const grp = groups.find(g => g.id === match.group_id);
             return (
-            <div key={match.id} className="glass-panel p-4 rounded-xl border border-white/10 hover:border-brand-neon-blue/50 transition-colors">
-              <div className="flex justify-between items-center mb-3">
+            <div key={match.id} className="comic-panel p-4 hover:-translate-y-1 transition-transform bg-white slanted-light">
+              <div className="flex justify-between items-center mb-3 border-b-2 border-brand-ink-black/20 pb-2">
                 <span className="text-xs font-bold px-2 py-1 bg-white/5 rounded text-brand-text-secondary">
                   {div ? div.name : "알 수 없음"} {grp ? `- ${grp.name}조` : ""}
                 </span>
@@ -141,7 +141,7 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
 
               <button 
                 onClick={() => handleOpenModal(match)}
-                className="w-full py-2 bg-white/5 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors"
+                className="w-full py-2 bg-brand-ink-black text-white font-bold hover:bg-brand-court-orange transition-colors comic-stamp !rotate-0 !shadow-[3px_3px_0_#111111]"
               >
                 점수 입력 / 수정
               </button>
@@ -152,13 +152,15 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
 
       {/* Modal */}
       {selectedMatch && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-[#111] border border-white/10 rounded-2xl p-6 w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">점수 입력</h2>
-            <div className="flex justify-between items-center mb-6 bg-white/5 p-4 rounded-xl">
-              <span className="font-bold flex-1 text-center">{getTeamName(selectedMatch.home_team_id)}</span>
-              <span className="text-brand-text-secondary px-4">VS</span>
-              <span className="font-bold flex-1 text-center">{getTeamName(selectedMatch.away_team_id)}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-ink-black/80 backdrop-blur-sm p-4">
+          <div className="comic-panel bg-brand-paper-cream p-6 w-full max-w-md">
+            <h2 className="text-2xl font-black italic uppercase score-font tracking-tighter mb-4 text-brand-ink-black flex items-center gap-2">
+              <span className="bg-brand-comic-yellow px-2 border-2 border-brand-ink-black shadow-[2px_2px_0_#111111] -rotate-2">SCORE</span> INPUT
+            </h2>
+            <div className="flex justify-between items-center mb-6 bg-white border-4 border-brand-ink-black p-4 shadow-[4px_4px_0_#111111] -skew-x-3">
+              <span className="font-black flex-1 text-center text-lg">{getTeamName(selectedMatch.home_team_id)}</span>
+              <span className="text-brand-victory-red font-black italic px-4 text-xl score-font">VS</span>
+              <span className="font-black flex-1 text-center text-lg">{getTeamName(selectedMatch.away_team_id)}</span>
             </div>
 
             {error && (
@@ -182,12 +184,12 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
               {!isForfeit ? (
                 <div className="flex gap-4">
                   <div className="flex-1">
-                    <label className="block text-sm text-brand-text-secondary mb-1">홈팀 점수</label>
-                    <input type="number" min="0" max="200" required value={homeScore} onChange={e => setHomeScore(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white text-center text-xl font-bold focus:ring-2 focus:ring-brand-neon-blue outline-none" />
+                    <label className="block text-sm text-brand-ink-black font-bold mb-1">홈팀 점수</label>
+                    <input type="number" min="0" max="200" required value={homeScore} onChange={e => setHomeScore(e.target.value)} className="w-full bg-white border-2 border-brand-ink-black p-3 text-brand-ink-black text-center text-xl font-bold focus:ring-4 focus:ring-brand-court-orange outline-none shadow-[2px_2px_0_#111111]" />
                   </div>
                   <div className="flex-1">
-                    <label className="block text-sm text-brand-text-secondary mb-1">어웨이팀 점수</label>
-                    <input type="number" min="0" max="200" required value={awayScore} onChange={e => setAwayScore(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white text-center text-xl font-bold focus:ring-2 focus:ring-brand-neon-blue outline-none" />
+                    <label className="block text-sm text-brand-ink-black font-bold mb-1">어웨이팀 점수</label>
+                    <input type="number" min="0" max="200" required value={awayScore} onChange={e => setAwayScore(e.target.value)} className="w-full bg-white border-2 border-brand-ink-black p-3 text-brand-ink-black text-center text-xl font-bold focus:ring-4 focus:ring-brand-court-orange outline-none shadow-[2px_2px_0_#111111]" />
                   </div>
                 </div>
               ) : (
@@ -209,10 +211,10 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
               )}
 
               <div className="flex gap-3 mt-6">
-                <button type="button" onClick={() => setSelectedMatch(null)} className="flex-1 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-bold transition-colors">
+                <button type="button" onClick={() => setSelectedMatch(null)} className="flex-1 py-3 bg-white border-4 border-brand-ink-black font-black text-brand-ink-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all">
                   취소
                 </button>
-                <button type="submit" disabled={loading} className="flex-1 py-3 bg-brand-neon-blue text-black hover:bg-cyan-400 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+                <button type="submit" disabled={loading} className="flex-1 py-3 bg-brand-court-orange text-white border-4 border-brand-ink-black font-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-2">
                   <Save className="w-4 h-4" />
                   {loading ? "저장 중..." : "결과 저장"}
                 </button>

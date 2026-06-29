@@ -98,22 +98,22 @@ export default function AdminBracketClient({ divisions, slots, teams, matches, o
   };
 
   return (
-    <main className="min-h-screen bg-brand-bg-dark text-white p-4 sm:p-8">
+    <main className="min-h-screen bg-brand-paper-cream text-brand-ink-black p-4 sm:p-8 pb-24">
       <div className="max-w-5xl mx-auto">
-        <header className="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
+        <header className="flex items-center justify-between mb-8 border-b-4 border-brand-ink-black pb-6">
           <div className="flex items-center gap-4">
-            <Link href="/admin/dashboard" className="p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">
-              <ChevronLeft className="w-5 h-5" />
+            <Link href="/admin/dashboard" className="p-2 bg-white border-2 border-brand-ink-black shadow-[2px_2px_0_#111111] hover:-translate-y-1 hover:shadow-none transition-all rounded-lg">
+              <ChevronLeft className="w-5 h-5 text-brand-ink-black" />
             </Link>
-            <h1 className="text-2xl font-bold">대진표 관리 (Bracket Builder)</h1>
+            <h1 className="text-3xl font-black italic uppercase score-font tracking-tighter">대진표 관리 (Bracket Builder)</h1>
           </div>
           <div>
             {isAllLocked ? (
-              <button onClick={() => handleLockToggle(false)} disabled={!isAdminSuper || loading} className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg font-bold border border-red-500/30 hover:bg-red-500/30 disabled:opacity-50 transition-colors">
+              <button onClick={() => handleLockToggle(false)} disabled={!isAdminSuper || loading} className="flex items-center gap-2 px-4 py-2 bg-brand-victory-red text-white border-4 border-brand-ink-black shadow-[4px_4px_0_#111111] font-black hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-50">
                 <Lock className="w-4 h-4" /> 잠금 해제 (SUPER_ADMIN)
               </button>
             ) : (
-              <button onClick={() => handleLockToggle(true)} disabled={loading} className="flex items-center gap-2 px-4 py-2 bg-brand-neon-blue text-black rounded-lg font-bold hover:bg-cyan-400 disabled:opacity-50 transition-colors">
+              <button onClick={() => handleLockToggle(true)} disabled={loading} className="flex items-center gap-2 px-4 py-2 comic-stamp bg-brand-court-orange text-white text-lg py-3 disabled:opacity-50 hover:scale-[1.02] transition-transform">
                 <Unlock className="w-4 h-4" /> 대진표 잠금 확정
               </button>
             )}
@@ -127,16 +127,16 @@ export default function AdminBracketClient({ divisions, slots, teams, matches, o
           </div>
         )}
 
-        <div className="flex gap-2 overflow-x-auto mb-8 hide-scrollbar pb-2">
+        <div className="flex gap-2 overflow-x-auto mb-8 comic-scrollbar pb-4">
           {divisions.map(d => (
-            <button key={d.id} onClick={() => setActiveDiv(d.id)} className={`px-4 py-2 whitespace-nowrap rounded-lg font-bold transition-colors ${activeDiv === d.id ? "bg-white text-black" : "bg-white/5 text-brand-text-secondary hover:text-white"}`}>
+            <button key={d.id} onClick={() => setActiveDiv(d.id)} className={`px-4 py-2 whitespace-nowrap font-black transition-all border-4 border-brand-ink-black shadow-[4px_4px_0_#111111] ${activeDiv === d.id ? "bg-brand-comic-yellow text-brand-ink-black translate-y-1 shadow-none" : "bg-white text-brand-ink-black hover:-translate-y-1 hover:shadow-[6px_6px_0_#111111]"}`}>
               {d.name}
             </button>
           ))}
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-white/10 overflow-x-auto">
-          <h2 className="text-xl font-bold mb-4">{currentDiv?.name} 대진표 슬롯</h2>
+        <div className="comic-panel p-6 bg-white border-4 border-brand-ink-black shadow-[8px_8px_0_#111111] overflow-x-auto comic-scrollbar pb-6">
+          <h2 className="text-2xl font-black italic uppercase score-font tracking-tighter mb-4 text-brand-ink-black">{currentDiv?.name} 대진표 슬롯</h2>
           <div className="space-y-4 min-w-[700px]">
             {Object.entries(
               currentSlots.reduce((acc, slot) => {
@@ -149,24 +149,24 @@ export default function AdminBracketClient({ divisions, slots, teams, matches, o
               const awaySlot = matchGroup.slots.find(s => s.slot_position === "AWAY");
               
               return (
-                <div key={matchId} className="flex flex-col p-4 bg-white/5 rounded-xl border border-white/5">
-                  <div className="flex items-center gap-2 mb-3 border-b border-white/10 pb-2">
-                    <span className="text-brand-neon-blue font-bold text-lg">{STAGE_LABELS[matchGroup.stage] || matchGroup.stage}</span>
-                    <span className="text-sm text-brand-text-secondary">제 {idx + 1}경기 (Match ID: {matchId.slice(0, 8)})</span>
+                <div key={matchId} className="flex flex-col p-4 bg-white border-4 border-brand-ink-black shadow-[4px_4px_0_#111111] slanted-light">
+                  <div className="flex items-center gap-2 mb-3 border-b-4 border-brand-ink-black pb-2">
+                    <span className="text-brand-court-orange font-black text-xl italic uppercase score-font bg-brand-ink-black px-2">{STAGE_LABELS[matchGroup.stage] || matchGroup.stage}</span>
+                    <span className="text-sm font-bold text-brand-ink-black/70">제 {idx + 1}경기</span>
                     <div className="flex-1 flex justify-end">
-                      {homeSlot?.is_locked || awaySlot?.is_locked ? <Lock className="w-5 h-5 text-brand-text-secondary" /> : <Unlock className="w-5 h-5 text-brand-text-secondary opacity-30" />}
+                      {homeSlot?.is_locked || awaySlot?.is_locked ? <Lock className="w-5 h-5 text-brand-ink-black" /> : <Unlock className="w-5 h-5 text-brand-ink-black/30" />}
                     </div>
                   </div>
                   
                   <div className="flex gap-4">
                     {/* HOME Slot */}
                     <div className="flex-1">
-                      <label className="block text-xs text-brand-text-secondary mb-1">홈팀</label>
+                      <label className="block text-sm font-black text-brand-ink-black mb-1">홈팀</label>
                       <select
                         value={homeSlot?.team_id || ""}
                         onChange={(e) => homeSlot && handleAssign(homeSlot.id, e.target.value)}
                         disabled={!homeSlot || (homeSlot.is_locked && !isAdminSuper)}
-                        className="w-full bg-[#111] border border-white/20 rounded-lg p-3 text-white focus:outline-none focus:border-brand-neon-blue disabled:opacity-50"
+                        className="w-full bg-brand-paper-cream border-2 border-brand-ink-black p-3 text-brand-ink-black font-bold focus:outline-none focus:ring-4 focus:ring-brand-comic-yellow disabled:opacity-50"
                       >
                         <option value="" className="text-black bg-white">-- 진출팀 선택 --</option>
                         {qualifiers.map(q => {
@@ -202,16 +202,16 @@ export default function AdminBracketClient({ divisions, slots, teams, matches, o
                       </select>
                     </div>
 
-                    <div className="flex items-center justify-center text-brand-text-secondary px-2 pt-5">VS</div>
+                    <div className="flex items-center justify-center text-brand-victory-red font-black text-xl italic px-2 pt-5 score-font">VS</div>
 
                     {/* AWAY Slot */}
                     <div className="flex-1">
-                      <label className="block text-xs text-brand-text-secondary mb-1">어웨이팀</label>
+                      <label className="block text-sm font-black text-brand-ink-black mb-1">어웨이팀</label>
                       <select
                         value={awaySlot?.team_id || ""}
                         onChange={(e) => awaySlot && handleAssign(awaySlot.id, e.target.value)}
                         disabled={!awaySlot || (awaySlot.is_locked && !isAdminSuper)}
-                        className="w-full bg-[#111] border border-white/20 rounded-lg p-3 text-white focus:outline-none focus:border-brand-neon-blue disabled:opacity-50"
+                        className="w-full bg-brand-paper-cream border-2 border-brand-ink-black p-3 text-brand-ink-black font-bold focus:outline-none focus:ring-4 focus:ring-brand-comic-yellow disabled:opacity-50"
                       >
                         <option value="" className="text-black bg-white">-- 진출팀 선택 --</option>
                         {qualifiers.map(q => {
@@ -231,7 +231,9 @@ export default function AdminBracketClient({ divisions, slots, teams, matches, o
                           const isDisabled = isAssigned || isPending || isFirstRoundTopSeedCollision;
                           const groupName = groups.find(g => g.id === q.originalGroup)?.name || "알수없는";
                           
-                          let label = `${groupName}조 ${q.rankInGroup}위 - ${q.team_name || q.school_name}`;
+                          let label = q.originalGroup 
+                            ? `${groups.find(g => g.id === q.originalGroup)?.name} ${q.rankInGroup}위 - ${q.team_name || q.school_name}`
+                            : `전체 ${q.rankInGroup}위 - ${q.team_name || q.school_name}`;
                           if (isPending) label += " (추첨 대기 중)";
                           else if (isAssigned) label += " (타 경기 배정됨)";
                           else if (isFirstRoundTopSeedCollision) label += " (상대가 조 1위라 배정 불가)";
