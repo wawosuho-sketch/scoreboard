@@ -138,10 +138,7 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
         ) : (
           <div 
             ref={containerRef}
-          <div 
-            ref={containerRef}
             className="flex justify-start min-w-max lg:min-w-0 lg:w-full gap-4 sm:gap-8 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 px-4 md:px-0 pt-8"
-          >
           >
             {STAGES.map((stageName, stageIdx) => {
               const stageMatches = currentMatches.filter((m) => m.stage === stageName);
