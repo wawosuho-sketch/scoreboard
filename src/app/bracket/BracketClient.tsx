@@ -138,7 +138,10 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
         ) : (
           <div 
             ref={containerRef}
-            className="flex justify-start min-w-[800px] lg:min-w-0 lg:w-full gap-8 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 px-4 md:px-0 pt-8"
+          <div 
+            ref={containerRef}
+            className="flex justify-start min-w-max lg:min-w-0 lg:w-full gap-4 sm:gap-8 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 px-4 md:px-0 pt-8"
+          >
           >
             {STAGES.map((stageName, stageIdx) => {
               const stageMatches = currentMatches.filter((m) => m.stage === stageName);
@@ -146,8 +149,8 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
               const isFinal = stageName === "FINAL";
 
               return (
-                <div key={stageName} className={`snap-center shrink-0 w-[85vw] md:w-auto flex-1 flex flex-col justify-around relative ${isFinal ? 'md:min-w-[400px]' : ''}`}>
-                  <h3 className={`text-center font-black uppercase tracking-tighter mb-12 flex flex-col items-center gap-1 score-font bg-white border-4 border-brand-ink-black py-2 px-4 shadow-[6px_6px_0_#111111] z-10 mx-auto ${isFinal ? 'text-4xl bg-brand-comic-yellow rotate-2' : 'text-2xl -rotate-1'}`}>
+                <div key={stageName} className={`snap-center shrink-0 w-[85vw] md:w-auto flex-1 flex flex-col justify-around relative ${isFinal ? 'md:min-w-[320px]' : 'md:min-w-[280px]'}`}>
+                  <h3 className={`text-center font-black uppercase tracking-tighter mb-8 sm:mb-12 flex flex-col items-center gap-1 score-font bg-white border-4 border-brand-ink-black py-2 px-4 shadow-[4px_4px_0_#111111] sm:shadow-[6px_6px_0_#111111] z-10 mx-auto ${isFinal ? 'text-2xl sm:text-4xl bg-brand-comic-yellow rotate-2' : 'text-xl sm:text-2xl -rotate-1'}`}>
                     {STAGE_LABELS[stageName]}
                   </h3>
                   
@@ -169,8 +172,8 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
                           transition={{ delay: stageIdx * 0.1 + matchIdx * 0.1 }}
                           key={match.id}
                           className={cn(
-                            "relative group bg-white border-4 border-brand-ink-black p-5 transition-transform hover:-translate-y-2 slanted shadow-[8px_8px_0_#111111]",
-                            isFinal ? "min-h-[300px] border-8 shadow-[12px_12px_0_#111111]" : ""
+                            "relative group bg-white border-4 border-brand-ink-black p-3 sm:p-5 transition-transform hover:-translate-y-2 slanted shadow-[4px_4px_0_#111111] sm:shadow-[8px_8px_0_#111111]",
+                            isFinal ? "min-h-[200px] sm:min-h-[300px] border-[6px] sm:border-8 shadow-[6px_6px_0_#111111] sm:shadow-[12px_12px_0_#111111]" : ""
                           )}
                         >
                           {/* Match Header */}
@@ -204,18 +207,18 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
                               <div className="flex items-center gap-2 z-10 min-w-0">
                                 {!home.isUnknown ? (
                                   <>
-                                    <h3 className={cn("font-black truncate", isFinal ? "text-3xl sm:text-4xl" : "text-xl sm:text-2xl", isCompleted && !isHomeWinner ? "text-brand-ink-black/40" : "text-brand-ink-black")}>{home.name}</h3>
+                                    <h3 className={cn("font-black truncate", isFinal ? "text-xl sm:text-4xl" : "text-base sm:text-2xl", isCompleted && !isHomeWinner ? "text-brand-ink-black/40" : "text-brand-ink-black")}>{home.name}</h3>
                                   </>
                                 ) : (
                                   <>
-                                    <h3 className={cn("font-black text-brand-ink-black/20", isFinal ? "text-3xl sm:text-4xl" : "text-xl sm:text-2xl")}>진출팀 미정</h3>
+                                    <h3 className={cn("font-black text-brand-ink-black/20", isFinal ? "text-xl sm:text-4xl" : "text-base sm:text-2xl")}>진출팀 미정</h3>
                                   </>
                                 )}
                               </div>
                               {isCompleted && (
                                 <span className={cn(
                                   "font-black score-font z-10 ml-4",
-                                  isFinal ? "text-5xl" : "text-3xl",
+                                  isFinal ? "text-3xl sm:text-5xl" : "text-2xl sm:text-3xl",
                                   isHomeWinner ? "text-brand-victory-red" : "text-brand-ink-black/40"
                                 )}>
                                   {match.home_score}
@@ -224,7 +227,7 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
                             </div>
 
                             <div className="flex items-center justify-center -my-3 relative z-20">
-                              <span className="text-2xl font-black italic text-brand-victory-red score-font drop-shadow-[2px_2px_0_#111111] -rotate-6">VS</span>
+                              <span className="text-xl sm:text-2xl font-black italic text-brand-victory-red score-font drop-shadow-[2px_2px_0_#111111] -rotate-6">VS</span>
                             </div>
 
                             {/* AWAY */}
@@ -235,18 +238,18 @@ export default function BracketClient({ divisions, matches, teams, slots }: Prop
                               <div className="flex items-center gap-2 z-10 min-w-0">
                                 {!away.isUnknown ? (
                                   <>
-                                    <h3 className={cn("font-black truncate", isFinal ? "text-3xl sm:text-4xl" : "text-xl sm:text-2xl", isCompleted && !isAwayWinner ? "text-brand-ink-black/40" : "text-brand-ink-black")}>{away.name}</h3>
+                                    <h3 className={cn("font-black truncate", isFinal ? "text-xl sm:text-4xl" : "text-base sm:text-2xl", isCompleted && !isAwayWinner ? "text-brand-ink-black/40" : "text-brand-ink-black")}>{away.name}</h3>
                                   </>
                                 ) : (
                                   <>
-                                    <h3 className={cn("font-black text-brand-ink-black/20", isFinal ? "text-3xl sm:text-4xl" : "text-xl sm:text-2xl")}>진출팀 미정</h3>
+                                    <h3 className={cn("font-black text-brand-ink-black/20", isFinal ? "text-xl sm:text-4xl" : "text-base sm:text-2xl")}>진출팀 미정</h3>
                                   </>
                                 )}
                               </div>
                               {isCompleted && (
                                 <span className={cn(
                                   "font-black score-font z-10 ml-4",
-                                  isFinal ? "text-5xl" : "text-3xl",
+                                  isFinal ? "text-3xl sm:text-5xl" : "text-2xl sm:text-3xl",
                                   isAwayWinner ? "text-brand-victory-red" : "text-brand-ink-black/40"
                                 )}>
                                   {match.away_score}

@@ -31,6 +31,7 @@ export async function POST(
       is_forfeit,
       forfeit_loser_team_id,
       reason,
+      is_reset,
     } = body;
 
     // 2. 경기 정보 확인
@@ -53,59 +54,72 @@ export async function POST(
 
     if (isEditingCompletedMatch && !reason) {
       return NextResponse.json(
-        { error: "Reason is required when editing completed match" },
+        { error: "Reason is required when editing or resetting a completed match" },
         { status: 400 }
       );
     }
 
-    let finalHomeScore = home_score;
-    let finalAwayScore = away_score;
-    let winnerId = null;
-    let loserId = null;
-    let status = is_forfeit ? "FORFEIT_COMPLETED" : "COMPLETED";
+    let updatePayload: any = {};
 
-    // 3. 점수 및 몰수패 로직 검증
-    if (is_forfeit) {
-      if (!forfeit_loser_team_id) {
-        return NextResponse.json({ error: "Forfeit loser required" }, { status: 400 });
-      }
-      
-      if (forfeit_loser_team_id === match.home_team_id) {
-        finalHomeScore = 0;
-        finalAwayScore = 20;
-        winnerId = match.away_team_id;
-        loserId = match.home_team_id;
-      } else if (forfeit_loser_team_id === match.away_team_id) {
-        finalHomeScore = 20;
-        finalAwayScore = 0;
-        winnerId = match.home_team_id;
-        loserId = match.away_team_id;
-      } else {
-        return NextResponse.json({ error: "Invalid forfeit loser team" }, { status: 400 });
-      }
+    if (is_reset) {
+      updatePayload = {
+        home_score: null,
+        away_score: null,
+        winner_team_id: null,
+        loser_team_id: null,
+        is_forfeit: false,
+        forfeit_loser_team_id: null,
+        status: "SCHEDULED",
+        result_confirmed_at: null,
+      };
     } else {
-      if (!isValidScore(finalHomeScore) || !isValidScore(finalAwayScore)) {
-        return NextResponse.json(
-          { error: "Scores must be non-negative integers between 0 and 200" },
-          { status: 400 }
-        );
-      }
+      let finalHomeScore = home_score;
+      let finalAwayScore = away_score;
+      let winnerId = null;
+      let loserId = null;
+      let status = is_forfeit ? "FORFEIT_COMPLETED" : "COMPLETED";
 
-      if (finalHomeScore === finalAwayScore) {
-        return NextResponse.json({ error: "Matches cannot end in a draw" }, { status: 400 });
-      }
-
-      if (finalHomeScore > finalAwayScore) {
-        winnerId = match.home_team_id;
-        loserId = match.away_team_id;
+      // 3. 점수 및 몰수패 로직 검증
+      if (is_forfeit) {
+        if (!forfeit_loser_team_id) {
+          return NextResponse.json({ error: "Forfeit loser required" }, { status: 400 });
+        }
+        
+        if (forfeit_loser_team_id === match.home_team_id) {
+          finalHomeScore = 0;
+          finalAwayScore = 20;
+          winnerId = match.away_team_id;
+          loserId = match.home_team_id;
+        } else if (forfeit_loser_team_id === match.away_team_id) {
+          finalHomeScore = 20;
+          finalAwayScore = 0;
+          winnerId = match.home_team_id;
+          loserId = match.away_team_id;
+        } else {
+          return NextResponse.json({ error: "Invalid forfeit loser team" }, { status: 400 });
+        }
       } else {
-        winnerId = match.away_team_id;
-        loserId = match.home_team_id;
-      }
-    }
+        if (!isValidScore(finalHomeScore) || !isValidScore(finalAwayScore)) {
+          return NextResponse.json(
+            { error: "Scores must be non-negative integers between 0 and 200" },
+            { status: 400 }
+          );
+        }
 
-    // 4. 경기 결과 업데이트
-    const updatePayload: any = {
+        if (finalHomeScore === finalAwayScore) {
+          return NextResponse.json({ error: "Matches cannot end in a draw" }, { status: 400 });
+        }
+
+        if (finalHomeScore > finalAwayScore) {
+          winnerId = match.home_team_id;
+          loserId = match.away_team_id;
+        } else {
+          winnerId = match.away_team_id;
+          loserId = match.home_team_id;
+        }
+      }
+
+      updatePayload = {
         home_score: finalHomeScore,
         away_score: finalAwayScore,
         winner_team_id: winnerId,
@@ -115,6 +129,9 @@ export async function POST(
         status,
         result_confirmed_at: new Date().toISOString(),
       };
+    }
+
+    // 4. 경기 결과 업데이트
     const { data: updatedMatch, error: updateError } = await (supabaseAdmin
       .from("matches") as any)
       .update(updatePayload)
@@ -130,12 +147,12 @@ export async function POST(
     const auditPayload: any = {
       actor_name: admin.name,
       actor_role: admin.role,
-      action: isEditingCompletedMatch ? "EDIT_MATCH_RESULT" : "UPDATE_MATCH_RESULT",
+      action: is_reset ? "RESET_MATCH_RESULT" : (isEditingCompletedMatch ? "EDIT_MATCH_RESULT" : "UPDATE_MATCH_RESULT"),
       target_type: "MATCH",
       target_id: matchId,
       before_data: match,
       after_data: updatedMatch,
-      reason: reason || (is_forfeit ? "Forfeit score update" : "Regular score input"),
+      reason: reason || (is_reset ? "Match result reset" : (is_forfeit ? "Forfeit score update" : "Regular score input")),
     };
     await (supabaseAdmin.from("audit_logs") as any).insert(auditPayload);
 

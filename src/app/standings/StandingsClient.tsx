@@ -173,7 +173,7 @@ export default function StandingsClient({ matches, teams, overrides, divisions, 
                       animate={{ opacity: 1, y: 0, rotate: isFirst ? -2 : 2 }}
                       transition={{ type: "spring", stiffness: 200, damping: 20, delay: idx * 0.2 }}
                       key={team.team_id}
-                      className={`relative group border-4 border-brand-ink-black p-6 ${isFirst ? 'bg-brand-comic-yellow' : 'bg-brand-sky-blue'} shadow-[8px_8px_0_#111111] flex flex-col justify-between min-h-[220px]`}
+                      className={`relative group border-4 border-brand-ink-black p-4 sm:p-6 ${isFirst ? 'bg-brand-comic-yellow' : 'bg-brand-sky-blue'} shadow-[6px_6px_0_#111111] sm:shadow-[8px_8px_0_#111111] flex flex-col justify-between min-h-[160px] sm:min-h-[220px]`}
                     >
                       <div className="absolute inset-0 speed-line-bg opacity-10 pointer-events-none"></div>
                       
@@ -183,21 +183,21 @@ export default function StandingsClient({ matches, teams, overrides, divisions, 
                         </div>
                       )}
 
-                      <div className="relative z-10 flex flex-col items-center pt-16 sm:pt-16 min-h-[160px] pb-4">
+                      <div className="relative z-10 flex flex-col items-center pt-12 sm:pt-16 min-h-[120px] sm:min-h-[160px] pb-2 sm:pb-4">
                         {/* 순위 숫자 */}
-                        <span className="absolute left-0 sm:left-4 -top-2 sm:top-2 text-7xl sm:text-8xl font-black italic score-font text-white drop-shadow-[4px_4px_0_#111111] z-20">
+                        <span className="absolute left-0 sm:left-4 -top-2 sm:top-2 text-5xl sm:text-8xl font-black italic score-font text-white drop-shadow-[4px_4px_0_#111111] z-20">
                           {idx + 1}
                         </span>
 
                         {/* 승점 스탬프 */}
                         <div className="absolute right-0 sm:right-4 -top-2 sm:top-2 text-center bg-white px-3 sm:px-4 py-1.5 sm:py-2 border-4 border-brand-ink-black shadow-[4px_4px_0_#111111] rotate-2 z-20">
                           <span className="text-[10px] sm:text-xs text-brand-ink-black font-black tracking-widest block mb-1">승점</span>
-                          <span className="text-3xl sm:text-4xl font-black score-font text-brand-victory-red leading-none">{team.points}</span>
+                          <span className="text-2xl sm:text-4xl font-black score-font text-brand-victory-red leading-none">{team.points}</span>
                         </div>
 
                         {/* 팀명 중심 */}
                         <div className="flex items-center justify-center pt-2">
-                          <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-brand-ink-black text-center break-keep leading-tight">
+                          <h3 className="text-2xl sm:text-5xl lg:text-6xl font-black tracking-tight text-brand-ink-black text-center break-keep leading-tight">
                             {info.name}
                           </h3>
                         </div>

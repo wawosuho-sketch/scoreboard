@@ -24,27 +24,27 @@ export default function RootLayout({
         {children}
         
         {/* Mobile Bottom Navigation */}
-        <nav className="fixed bottom-0 w-full bg-[#0a0f1a]/80 backdrop-blur-xl border-t border-white/10 z-50 pb-safe">
+        <nav className="fixed bottom-0 w-full bg-brand-paper-cream border-t-[3px] border-brand-ink-black z-50 pb-safe shadow-[0_-4px_0_rgba(17,17,17,0.1)]">
           <div className="max-w-md mx-auto px-6 h-16 flex items-center justify-between">
-            <Link href="/" className="flex flex-col items-center text-brand-neon-blue">
-              <Home className="w-5 h-5 mb-1" />
-              <span className="text-[10px] font-medium">홈</span>
+            <Link href="/" className="flex flex-col items-center text-brand-court-orange">
+              <Home className="w-5 h-5 mb-1 stroke-[2.5px]" />
+              <span className="text-[10px] font-bold">홈</span>
             </Link>
-            <Link href="/matches" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
-              <Calendar className="w-5 h-5 mb-1" />
-              <span className="text-[10px] font-medium">일정</span>
+            <Link href="/matches" className="flex flex-col items-center text-brand-ink-black/60 hover:text-brand-ink-black transition-colors">
+              <Calendar className="w-5 h-5 mb-1 stroke-[2.5px]" />
+              <span className="text-[10px] font-bold">일정</span>
             </Link>
-            <Link href="/standings" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
-              <Trophy className="w-5 h-5 mb-1" />
-              <span className="text-[10px] font-medium">리그</span>
+            <Link href="/standings" className="flex flex-col items-center text-brand-ink-black/60 hover:text-brand-ink-black transition-colors">
+              <Trophy className="w-5 h-5 mb-1 stroke-[2.5px]" />
+              <span className="text-[10px] font-bold">리그</span>
             </Link>
-            <Link href="/bracket" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
-              <LayoutDashboard className="w-5 h-5 mb-1" />
-              <span className="text-[10px] font-medium">토너먼트</span>
+            <Link href="/bracket" className="flex flex-col items-center text-brand-ink-black/60 hover:text-brand-ink-black transition-colors">
+              <LayoutDashboard className="w-5 h-5 mb-1 stroke-[2.5px]" />
+              <span className="text-[10px] font-bold">토너먼트</span>
             </Link>
-            <Link href="/admin/dashboard" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
-              <Shield className="w-5 h-5 mb-1" />
-              <span className="text-[10px] font-medium">관리자</span>
+            <Link href="/admin/dashboard" className="flex flex-col items-center text-brand-ink-black/60 hover:text-brand-ink-black transition-colors">
+              <Shield className="w-5 h-5 mb-1 stroke-[2.5px]" />
+              <span className="text-[10px] font-bold">관리자</span>
             </Link>
           </div>
         </nav>

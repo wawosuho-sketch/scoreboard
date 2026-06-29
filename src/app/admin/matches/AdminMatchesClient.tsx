@@ -80,6 +80,36 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
     }
   };
 
+  const handleReset = async () => {
+    if (!selectedMatch) return;
+    if (!confirm("정말 이 경기 결과를 초기화하시겠습니까? (상태가 SCHEDULED로 변경됩니다)")) return;
+    
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch(`/api/admin/matches/${selectedMatch.id}/result`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          is_reset: true,
+          reason: reason || "결과 초기화 요청"
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to reset match");
+
+      // Success
+      setSelectedMatch(null);
+      router.refresh();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-brand-paper-cream text-brand-ink-black p-4 sm:p-8 pb-24">
       <div className="max-w-5xl mx-auto">
@@ -210,14 +240,21 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
                 </div>
               )}
 
-              <div className="flex gap-3 mt-6">
-                <button type="button" onClick={() => setSelectedMatch(null)} className="flex-1 py-3 bg-white border-4 border-brand-ink-black font-black text-brand-ink-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all">
-                  취소
-                </button>
-                <button type="submit" disabled={loading} className="flex-1 py-3 bg-brand-court-orange text-white border-4 border-brand-ink-black font-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-2">
-                  <Save className="w-4 h-4" />
-                  {loading ? "저장 중..." : "결과 저장"}
-                </button>
+              <div className="flex flex-col gap-3 mt-6">
+                <div className="flex gap-3">
+                  <button type="button" onClick={() => setSelectedMatch(null)} className="flex-1 py-3 bg-white border-4 border-brand-ink-black font-black text-brand-ink-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all">
+                    취소
+                  </button>
+                  <button type="submit" disabled={loading} className="flex-1 py-3 bg-brand-court-orange text-white border-4 border-brand-ink-black font-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-2">
+                    <Save className="w-4 h-4" />
+                    {loading ? "저장 중..." : "결과 저장"}
+                  </button>
+                </div>
+                {(selectedMatch.status === "COMPLETED" || selectedMatch.status === "FORFEIT_COMPLETED") && (
+                  <button type="button" onClick={handleReset} disabled={loading} className="w-full py-2 bg-brand-victory-red text-white border-4 border-brand-ink-black font-black shadow-[4px_4px_0_#111111] hover:translate-y-1 hover:shadow-none transition-all mt-2">
+                    {loading ? "처리 중..." : "경기 결과 초기화 (SCHEDULED로 복구)"}
+                  </button>
+                )}
               </div>
             </form>
           </div>
