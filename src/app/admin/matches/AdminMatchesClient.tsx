@@ -114,7 +114,7 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
             <div key={match.id} className="comic-panel p-4 hover:-translate-y-1 transition-transform bg-white slanted-light">
               <div className="flex justify-between items-center mb-3 border-b-2 border-brand-ink-black/20 pb-2">
                 <span className="text-xs font-bold px-2 py-1 bg-white/5 rounded text-brand-text-secondary">
-                  {div ? div.name : "알 수 없음"} {grp ? `- ${grp.name}조` : ""}
+                  {div ? div.name : "알 수 없음"} {grp ? `- ${grp.name}` : ""}
                 </span>
                 <span className={`text-xs font-bold px-2 py-1 rounded ${
                   match.status === "COMPLETED" || match.status === "FORFEIT_COMPLETED" 
