@@ -3,7 +3,7 @@ import { Outfit, Teko } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Home, Trophy, Calendar, LayoutDashboard } from "lucide-react";
+import { Home, Trophy, Calendar, LayoutDashboard, Shield } from "lucide-react";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 const teko = Teko({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-teko" });
@@ -32,7 +32,7 @@ export default function RootLayout({
             </Link>
             <Link href="/matches" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
               <Calendar className="w-5 h-5 mb-1" />
-              <span className="text-[10px] font-medium">일정/결과</span>
+              <span className="text-[10px] font-medium">일정</span>
             </Link>
             <Link href="/standings" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
               <Trophy className="w-5 h-5 mb-1" />
@@ -41,6 +41,10 @@ export default function RootLayout({
             <Link href="/bracket" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
               <LayoutDashboard className="w-5 h-5 mb-1" />
               <span className="text-[10px] font-medium">토너먼트</span>
+            </Link>
+            <Link href="/admin/dashboard" className="flex flex-col items-center text-brand-text-secondary hover:text-white transition-colors">
+              <Shield className="w-5 h-5 mb-1" />
+              <span className="text-[10px] font-medium">관리자</span>
             </Link>
           </div>
         </nav>
