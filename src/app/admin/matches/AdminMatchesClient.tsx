@@ -164,7 +164,7 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
             </div>
 
             {error && (
-              <div className="bg-red-500/10 border border-red-500/50 p-3 rounded-lg mb-4 text-red-400 text-sm flex gap-2">
+              <div className="bg-brand-victory-red border-2 border-brand-ink-black p-3 mb-4 text-white font-bold text-sm shadow-[4px_4px_0_#111111] -rotate-1 flex gap-2">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 {error}
               </div>
@@ -178,7 +178,7 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
                   checked={isForfeit} 
                   onChange={(e) => setIsForfeit(e.target.checked)} 
                 />
-                <label htmlFor="forfeit" className="text-brand-neon-pink font-bold">몰수패 처리 (20:0)</label>
+                <label htmlFor="forfeit" className="text-brand-victory-red font-black">몰수패 처리 (20:0)</label>
               </div>
 
               {!isForfeit ? (
@@ -194,8 +194,8 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
                 </div>
               ) : (
                 <div>
-                  <label className="block text-sm text-brand-text-secondary mb-1">패배 팀 선택</label>
-                  <select value={forfeitLoser} onChange={e => setForfeitLoser(e.target.value)} required className="w-full bg-[#111] border border-white/10 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-neon-blue outline-none">
+                  <label className="block text-sm font-black text-brand-ink-black mb-1">패배 팀 선택</label>
+                  <select value={forfeitLoser} onChange={e => setForfeitLoser(e.target.value)} required className="w-full bg-white border-2 border-brand-ink-black p-3 text-brand-ink-black font-bold focus:ring-4 focus:ring-brand-court-orange outline-none shadow-[2px_2px_0_#111111]">
                     <option value="" className="text-black bg-white">-- 선택 --</option>
                     <option value={selectedMatch.home_team_id!} className="text-black bg-white">홈팀: {getTeamName(selectedMatch.home_team_id)}</option>
                     <option value={selectedMatch.away_team_id!} className="text-black bg-white">어웨이팀: {getTeamName(selectedMatch.away_team_id)}</option>
@@ -205,8 +205,8 @@ export default function AdminMatchesClient({ matches, teams, divisions, groups }
 
               {(selectedMatch.status === "COMPLETED" || selectedMatch.status === "FORFEIT_COMPLETED") && (
                 <div>
-                  <label className="block text-sm text-brand-text-secondary mb-1">수정 사유 (필수)</label>
-                  <input type="text" required value={reason} onChange={e => setReason(e.target.value)} placeholder="예: 심판 판정 번복, 점수 기입 실수 등" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white text-sm focus:ring-2 focus:ring-brand-neon-blue outline-none" />
+                  <label className="block text-sm font-black text-brand-ink-black mb-1">수정 사유 (필수)</label>
+                  <input type="text" required value={reason} onChange={e => setReason(e.target.value)} placeholder="예: 심판 판정 번복, 점수 기입 실수 등" className="w-full bg-white border-2 border-brand-ink-black p-3 text-brand-ink-black font-bold focus:ring-4 focus:ring-brand-court-orange outline-none shadow-[2px_2px_0_#111111]" />
                 </div>
               )}
 
